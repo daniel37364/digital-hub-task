@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\LabTest\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Model;
+use Modules\Common\Infrastructure\EloquentModels\LangSet;
 
 class LabTestCategory extends Model
 {
@@ -28,4 +29,9 @@ class LabTestCategory extends Model
         'deleted' => 'boolean',
         'ord' => 'integer'
     ];
+
+    public function name()
+    {
+        return $this->belongsTo(LangSet::class, 'name_lang_set_id');
+    }
 }

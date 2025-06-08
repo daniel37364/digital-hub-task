@@ -11,28 +11,14 @@ use Modules\LabTest\Domain\Collections\LabTestCollection;
 
 class LabTestCategory
 {
-    private UuidInterface $id;
-    private UuidInterface $nameLangSetId;
-    private bool $public;
-    private bool $deleted;
-    private int $ord;
-
-    private ?LabTestCollection $labTests = null;
-
-    private LangSet $nameLangSet;
-    private LangSet $descriptionLangSet;
-
-
-
     public function __construct(
-        UuidInterface $id,
-        UuidInterface $nameLangSetId,
-        bool $public,
-        bool $deleted,
-        int $ord,
-        ?LabTestCollection $labTests = null,
-        LangSet $nameLangSet,
-        LangSet $descriptionLangSet
+        private UuidInterface $id,
+        private UuidInterface $nameLangSetId,
+        private bool $public,
+        private bool $deleted,
+        private int $ord,
+        private LangSet $nameLangSet,
+        private ?LabTestCollection $labTests = null,
     ) {
         $this->id = $id;
         $this->nameLangSetId = $nameLangSetId;
@@ -41,7 +27,6 @@ class LabTestCategory
         $this->ord = $ord;
         $this->labTests = $labTests;
         $this->nameLangSet = $nameLangSet;
-        $this->descriptionLangSet = $descriptionLangSet;
     }
 
     public function getId(): UuidInterface
@@ -74,13 +59,17 @@ class LabTestCategory
         return $this->labTests;
     }
 
-    public function getNameLang(string $langCode): Lang
+    public function getNameLangSet(): LangSet
     {
-        return $this->nameLangSet->getLang($langCode);
+        return $this->nameLangSet;
     }
 
-    public function getDescriptionLang(string $langCode): Lang
+    public function updatePublic(bool $public): void
     {
-        return $this->descriptionLangSet->getLang($langCode);
+        $this->public = $public;
+    }
+    public function updateOrd(int $ord): void
+    {
+        $this->ord = $ord;
     }
 }
