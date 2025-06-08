@@ -1,0 +1,31 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Modules\LabTest\Infrastructure\EloquentModels;
+
+use Illuminate\Database\Eloquent\Model;
+
+class LabTestCategory extends Model
+{
+    public $incrementing = false;
+    protected $keyType = 'string';
+
+    protected $table = 'lab_test_categories';
+
+    protected $fillable = [
+        'id',
+        'name_lang_set_id',
+        'public',
+        'deleted',
+        'ord'
+    ];
+
+    protected $casts = [
+        'id' => 'string',
+        'name_lang_set_id' => 'string',
+        'public' => 'boolean',
+        'deleted' => 'boolean',
+        'ord' => 'integer'
+    ];
+}
