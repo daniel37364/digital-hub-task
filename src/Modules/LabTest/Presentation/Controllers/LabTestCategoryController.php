@@ -43,6 +43,7 @@ class LabTestCategoryController
     public function show(LabTestCategoryShowRequest $request)
     {
         $labTestCategory = $this->findByIdLabTestCategoryUseCase->execute($request->id);
+
         return ApiResponseFormatter::success(
             LabTestCategoryMapper::toResponseDto($labTestCategory)
         );

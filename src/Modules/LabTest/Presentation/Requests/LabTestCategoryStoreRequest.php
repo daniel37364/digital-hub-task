@@ -20,6 +20,7 @@ class LabTestCategoryStoreRequest extends FormRequest
             'name.*' => 'required|string',
             'public' => 'required|boolean',
             'ord' => 'nullable|integer',
+
         ];
     }
 }

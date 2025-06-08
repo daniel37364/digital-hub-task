@@ -10,6 +10,7 @@ class LabTestCategoryUpdateDto
         public string $id,
         public ?array $name = null,
         public ?bool $public = null,
-        public ?int $ord = null
+        public ?int $ord = null,
+        public readonly ?array $labTests = null,
     ) {}
 }

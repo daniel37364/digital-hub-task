@@ -34,4 +34,9 @@ class LabTestCategory extends Model
     {
         return $this->belongsTo(LangSet::class, 'name_lang_set_id');
     }
+
+    public function labTests()
+    {
+        return $this->belongsToMany(LabTest::class, 'lab_test_category_pivot', 'lab_test_category_id', 'lab_test_id');
+    }
 }

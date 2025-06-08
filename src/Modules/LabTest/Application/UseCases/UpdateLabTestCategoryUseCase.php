@@ -42,6 +42,9 @@ class UpdateLabTestCategoryUseCase
             if ($dto->ord !== null) {
                 $labTestCategory->updateOrd($dto->ord);
             }
+            if ($dto->labTests !== null) {
+                $this->labTestCategoryRepository->updateLabTests($labTestCategory, $dto->labTests);
+            }
 
             $labTestCategory = $this->labTestCategoryRepository->save($labTestCategory);
 

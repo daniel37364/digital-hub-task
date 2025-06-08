@@ -14,7 +14,8 @@ class LabTestCategoryUpdateMapper
             id: $data['id'],
             name: $data['name'] ?? null,
             public: $data['public'] ?? null,
-            ord: $data['ord'] ?? null
+            ord: $data['ord'] ?? null,
+            labTests: $data['lab_tests'] ?? null,
         );
     }
 }

@@ -27,6 +27,8 @@ class LabTestCategoryUpdateRequest extends FormRequest
             'name.*' => 'nullable|string',
             'public' => 'nullable|boolean',
             'ord' => 'nullable|integer',
+            'lab_tests' => 'sometimes|array',
+            'lab_tests.*' => 'sometimes|nullable|string|exists:lab_tests,id',
         ];
     }
 }

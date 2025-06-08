@@ -8,6 +8,7 @@ use Ramsey\Uuid\Uuid;
 use Modules\LabTest\Domain\Models\LabTestCategory;
 use Modules\Common\Application\Mappers\LangSetMapper;
 use Modules\LabTest\Application\DTOs\LabTestCategoryDto;
+use Modules\LabTest\Domain\Collections\LabTestCollection;
 use Modules\LabTest\Application\DTOs\LabTestCategoryResponseDto;
 use Modules\LabTest\Domain\Collections\LabTestCategoryCollection;
 
@@ -26,6 +27,7 @@ class LabTestCategoryMapper
 
     public static function fromDatabase(array $data): LabTestCategory
     {
+
         return new LabTestCategory(
             id: Uuid::fromString($data['id']),
             nameLangSetId: Uuid::fromString($data['name_lang_set_id']),
@@ -33,7 +35,9 @@ class LabTestCategoryMapper
             deleted: $data['deleted'],
             ord: $data['ord'],
             nameLangSet: LangSetMapper::fromDatabase($data['name']),
-            // labTests: isset($data['labTests']) ? LabTestCollection::fromArray($data['labTests']) : null
+            labTests: isset($data['lab_tests']) ? new LabTestCollection(array_map(function ($labtest) {
+                return LabTestMapper::fromDatabase($labtest);
+            }, $data['lab_tests'] ?? [])) : null
         );
     }
 
@@ -42,7 +46,8 @@ class LabTestCategoryMapper
         return new LabTestCategoryResponseDto(
             id: $category->getId()->toString(),
             name: LangSetMapper::toDto($category->getNameLangSet())->langs,
-            ord: $category->getOrd()
+            ord: $category->getOrd(),
+            lab_tests: $category->getLabTests() ? LabTestMapper::toResponseDtos($category->getLabTests()) : null,
         );
     }
 

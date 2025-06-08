@@ -54,7 +54,7 @@ class LabTestCategory
         return $this->ord;
     }
 
-    public function getLabTests(): LabTestCollection
+    public function getLabTests(): ?LabTestCollection
     {
         return $this->labTests;
     }

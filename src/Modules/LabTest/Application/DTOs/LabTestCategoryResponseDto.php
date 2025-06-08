@@ -9,6 +9,7 @@ class LabTestCategoryResponseDto
     public function __construct(
         public string $id,
         public array $name,
-        public int $ord
+        public int $ord,
+        public ?array $lab_tests = null
     ) {}
 }

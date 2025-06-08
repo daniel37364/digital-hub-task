@@ -30,12 +30,12 @@ class LabTestMapper
             public: $data['public'],
             deleted: $data['deleted'] ?? false,
             ord: $data['ord'] ?? 0,
-            // categories: isset($data['categories']) ? LabTestCategoryMapper::fromArray($data['categories']) : null
         );
     }
 
     public static function fromDatabase(array $data): LabTest
     {
+
         return new LabTest(
             id: Uuid::fromString($data['id']),
             code: $data['code'],
@@ -64,7 +64,6 @@ class LabTestMapper
             public: $labTest->isPublic(),
             deleted: $labTest->isDeleted(),
             ord: $labTest->getOrd(),
-            // categories: $labTest->getCategories() ? LabTestCategoryMapper::toDtoCollection($labTest->getCategories()) : null
         );
     }
 

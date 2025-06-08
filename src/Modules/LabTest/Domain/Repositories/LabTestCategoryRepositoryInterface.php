@@ -13,5 +13,6 @@ interface LabTestCategoryRepositoryInterface
     public function filterLabTestCategories(FilterLabTestCategoryDto $filterDto): LabTestCategoryCollection;
     public function findById(string $id): ?LabTestCategory;
     public function save(LabTestCategory $labTestCategory): LabTestCategory;
+    public function updateLabTests(LabTestCategory $labTestCategory, array $labTests): LabTestCategory;
     // public function delete(string $id): void;
 }
