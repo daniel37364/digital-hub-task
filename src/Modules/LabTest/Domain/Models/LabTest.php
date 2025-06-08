@@ -22,7 +22,7 @@ class LabTest
         private int $ord,
         private LangSet $nameLangSet,
         private LangSet $descriptionLangSet,
-        private ?LabTestCategoryCollection $categories = null
+        private ?LabTestCategoryCollection $categories = null,
     ) {
         $this->id = $id;
         $this->code = $code;

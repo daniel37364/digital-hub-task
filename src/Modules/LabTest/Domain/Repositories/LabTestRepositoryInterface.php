@@ -13,4 +13,5 @@ interface LabTestRepositoryInterface
     public function findById(string $id): ?LabTest;
     public function save(LabTest $labTest): LabTest;
     public function delete(string $id): void;
+    public function updateCategories(LabTest $labTest, array $categoryIds): LabTest;
 }

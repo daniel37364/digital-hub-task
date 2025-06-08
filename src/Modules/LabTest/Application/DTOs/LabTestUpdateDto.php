@@ -15,5 +15,6 @@ class LabTestUpdateDto
         public readonly ?int $code = null,
         public readonly ?string $codeIcd = null,
         public readonly ?bool $public = null,
+        public readonly ?array $categories = null,
     ) {}
 }

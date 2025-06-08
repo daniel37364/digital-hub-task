@@ -47,7 +47,9 @@ class LabTestMapper
             ord: $data['ord'],
             nameLangSet: LangSetMapper::fromDatabase($data['name']),
             descriptionLangSet: LangSetMapper::fromDatabase($data['description']),
-            // categories: isset($dto->categories) ? LabTestCategoryCollection::fromArray($dto->categories) : null
+            categories: isset($data['categories']) ? new LabTestCategoryCollection(array_map(function ($categoryData) {
+                return LabTestCategoryMapper::fromDatabase($categoryData);
+            }, $data['categories'])) : null
         );
     }
 
@@ -77,6 +79,7 @@ class LabTestMapper
 
     public static function toResponseDto(LabTest $labTest): LabTestResponeDto
     {
+
         return new LabTestResponeDto(
             id: $labTest->getId()->toString(),
             code: $labTest->getCode(),
@@ -84,7 +87,7 @@ class LabTestMapper
             name: LangSetMapper::toDto($labTest->getNameLangSet())->langs,
             description: LangSetMapper::toDto($labTest->getDescriptionLangSet())->langs,
             ord: $labTest->getOrd(),
-            // categories: $labTest->getCategories() ? LabTestCategoryMapper::toDtoCollection($labTest->getCategories()) : null
+            categories: $labTest->getCategories() ? LabTestCategoryMapper::toResponseDtos($labTest->getCategories()) : null
         );
     }
 

@@ -17,7 +17,7 @@ class LabTestRepository implements LabTestRepositoryInterface
 {
     public function filterLabTests(FilterLabTestDto $filterDto): LabTestCollection
     {
-        $query = LabTestEloquent::with(['name.langs', 'description.langs', 'synonyms.name'])->where('public', true)->where('deleted', false);
+        $query = LabTestEloquent::with(['name.langs', 'description.langs', 'synonyms.name', 'categories', 'categories.name.langs'])->where('public', true)->where('deleted', false);
 
         if ($filterDto->name !== null) {
             $query->whereHas('name.langs', function ($q) use ($filterDto) {
@@ -39,12 +39,13 @@ class LabTestRepository implements LabTestRepositoryInterface
         if ($filterDto->codeIcd !== null) {
             $query->where('code_icd', 'like', '%' . $filterDto->codeIcd . '%');
         }
+
         return new LabTestCollection($query->get()->map(fn(LabTestEloquent $model) => LabTestMapper::fromDatabase($model->toArray()))->all());
     }
 
     public function findById(string $id): ?LabTest
     {
-        $model = LabTestEloquent::with(['name.langs', 'description.langs', 'synonyms.name'])->find($id);
+        $model = LabTestEloquent::with(['name.langs', 'description.langs', 'synonyms.name', 'categories.name.langs'])->find($id);
         return $model->exists() ? LabTestMapper::fromDatabase($model->toArray()) : null;
     }
 
@@ -63,7 +64,7 @@ class LabTestRepository implements LabTestRepositoryInterface
             ]
         );
 
-        $model->load(['name.langs', 'description.langs', 'synonyms.name']);
+        $model->load(['name.langs', 'description.langs', 'synonyms.name', 'categories.name.langs']);
 
         return LabTestMapper::fromDatabase($model->toArray());
     }
@@ -72,5 +73,16 @@ class LabTestRepository implements LabTestRepositoryInterface
     {
         $model = LabTestEloquent::findOrFail($id);
         $model->delete();
+    }
+
+    public function updateCategories(LabTest $labTest, array $categoryIds): LabTest
+    {
+        $model = LabTestEloquent::with(['name.langs', 'description.langs', 'synonyms.name', 'categories.name.langs'])->find($labTest->getId()->toString());
+        $model->categories()->detach();
+        foreach ($categoryIds as $categoryId) {
+            $model->categories()->attach($categoryId);
+        }
+        $model->load('categories.name.langs');
+        return LabTestMapper::fromDatabase($model->toArray());
     }
 }

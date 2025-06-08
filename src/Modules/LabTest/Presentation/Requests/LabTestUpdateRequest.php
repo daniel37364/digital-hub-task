@@ -36,7 +36,8 @@ class LabTestUpdateRequest extends FormRequest
             'description' => 'sometimes|array',
             'description.*' => 'sometimes|string|max:2048',
             'public' => 'sometimes|boolean',
-            'category_id' => 'sometimes|nullable|string|exists:lab_test_categories,id',
+            'categories' => 'sometimes|array',
+            'categories.*' => 'sometimes|nullable|string|exists:lab_test_categories,id',
         ];
     }
 }

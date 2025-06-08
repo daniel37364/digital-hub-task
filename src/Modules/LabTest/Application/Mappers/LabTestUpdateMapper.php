@@ -16,7 +16,8 @@ class LabTestUpdateMapper
             description: $data['description'] ?? null,
             code: $data['code'] ?? null,
             codeIcd: $data['code_icd'] ?? null,
-            public: $data['public'] ?? null
+            public: $data['public'] ?? null,
+            categories: $data['categories'] ?? null,
         );
     }
 }

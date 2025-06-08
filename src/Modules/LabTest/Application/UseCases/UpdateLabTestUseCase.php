@@ -43,9 +43,12 @@ class UpdateLabTestUseCase
                 $labTest->getDescriptionLangSet()->updateLangs($dto->description);
                 $this->langSetRepository->save($labTest->getDescriptionLangSet());
             }
+            if ($dto->categories !== null) {
+                $this->repository->updateCategories($labTest, $dto->categories);
+            }
+
 
             $labTest = $this->repository->save($labTest);
-
             DB::commit();
             return $labTest;
         } catch (\Throwable $e) {
