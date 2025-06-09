@@ -20,7 +20,7 @@ class LabTestRepository implements LabTestRepositoryInterface
         $query = LabTestEloquent::with([
             'name.langs',
             'description.langs',
-            'synonyms.name',
+            'synonyms.synonym.name.langs',
             'categories' => fn($q) => $q->where('public', true)->where('deleted', false),
             'categories.name.langs',
         ])->where('public', true)->where('deleted', false);
@@ -35,8 +35,8 @@ class LabTestRepository implements LabTestRepositoryInterface
         }
 
         if ($filterDto->synonym !== null) {
-            $query->whereHas('synonyms', function ($q) use ($filterDto) {
-                $q->where('name', 'like', '%' . $filterDto->synonym . '%');
+            $query->whereHas('synonyms.synonym.name.langs', function ($q) use ($filterDto) {
+                $q->where('value', 'like', '%' . $filterDto->synonym . '%');
             });
         }
         if ($filterDto->code !== null) {
@@ -45,7 +45,6 @@ class LabTestRepository implements LabTestRepositoryInterface
         if ($filterDto->codeIcd !== null) {
             $query->where('code_icd', 'like', '%' . $filterDto->codeIcd . '%');
         }
-
         return new LabTestCollection($query->get()->map(fn(LabTestEloquent $model) => LabTestMapper::fromDatabase($model->toArray()))->all());
     }
 

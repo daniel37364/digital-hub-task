@@ -53,9 +53,6 @@ class ExceptionHandler extends BaseExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        if ($exception instanceof \RuntimeException) {
-            return ApiResponseFormatter::error('Runtime Exception', 400);
-        }
         if ($exception instanceof \Illuminate\Validation\ValidationException) {
             return ApiResponseFormatter::error('Validation Error', 422, $exception->errors());
         }
@@ -78,14 +75,14 @@ class ExceptionHandler extends BaseExceptionHandler
             return ApiResponseFormatter::error('Forbidden', 403);
         }
 
-        if ($exception instanceof \Illuminate\Database\QueryException) {
-            return ApiResponseFormatter::error('Database error', 500);
-        }
-
         if ($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException) {
             return ApiResponseFormatter::error($exception->getMessage(), $exception->getStatusCode());
         }
 
-        return ApiResponseFormatter::error($exception->getMessage(), 500);
+        if (app()->environment('production')) {
+            return ApiResponseFormatter::error('Fatal error', 500);
+        } else {
+            return ApiResponseFormatter::error($exception->getMessage(), 500);
+        }
     }
 }

@@ -16,7 +16,7 @@ class LabTestCategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name_lang_set_id' => LangSet::factory(),
+            'name_lang_set_id' => LangSet::factory()->withLangs(),
             'public' => true,
             'deleted' => false,
             'ord' => $this->faker->numberBetween(1, 100),

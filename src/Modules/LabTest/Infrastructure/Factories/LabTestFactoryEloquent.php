@@ -18,7 +18,7 @@ class LabTestFactoryEloquent extends Factory
     public function definition(): array
     {
         return [
-            'code' => $this->faker->unique()->bothify(),
+            'code' => $this->faker->unique()->randomNumber(),
             'code_icd' => $this->faker->unique()->bothify(),
             'name_lang_set_id' => LangSet::factory()->withLangs(),
             'description_lang_set_id' => LangSet::factory()->withLangs(),

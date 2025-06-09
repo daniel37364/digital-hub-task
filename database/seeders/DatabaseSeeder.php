@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Modules\LabTest\Infrastructure\EloquentModels\LabTest;
+use Modules\LabTest\Infrastructure\EloquentModels\LabTestCategory;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +14,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        LabTestCategory::factory()
+            ->count(5)
+            ->has(LabTest::factory()->count(10), 'labTests')
+            ->create();
     }
 }
