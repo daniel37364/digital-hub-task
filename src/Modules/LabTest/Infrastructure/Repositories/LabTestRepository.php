@@ -58,7 +58,7 @@ class LabTestRepository implements LabTestRepositoryInterface
             'categories' => fn($q) => $q->where('public', true)->where('deleted', false),
             'categories.name.langs',
         ])->where('public', true)->where('deleted', false)->find($id);
-        return $model->exists() ? LabTestMapper::fromDatabase($model->toArray()) : null;
+        return $model ? LabTestMapper::fromDatabase($model->toArray()) : null;
     }
 
     public function save(LabTest $labTest): LabTest

@@ -41,7 +41,7 @@ class LabTestCategoryRepository implements LabTestCategoryRepositoryInterface
             'labTests.description.langs',
         ])->where('deleted', false)->where('public', true)->find($id);
 
-        return $model->exists() ? LabTestCategoryMapper::fromDatabase($model->toArray()) : null;
+        return $model ? LabTestCategoryMapper::fromDatabase($model->toArray()) : null;
     }
 
     public function save(LabTestCategory $labTest): LabTestCategory

@@ -115,15 +115,18 @@ class LabTestControllerTest extends TestCase
         $response->assertJsonPath('data.name.en', 'Updated Test Name');
     }
 
-    // public function testDestroy(): void
-    // {
-    //     $labTest = LabTest::factory()->create();
+    public function testDestroy(): void
+    {
+        $labTest = LabTest::factory()->create();
 
-    //     $response = $this->deleteJson("/lab-tests/{$labTest->id}");
+        $response = $this->deleteJson("/api/lab-tests/{$labTest->id}");
 
-    //     $response->assertStatus(200);
-    //     $response->assertJson([
-    //         'message' => 'Lab test deleted successfully'
-    //     ]);
-    // }
+        $response->assertStatus(200);
+        $response->assertJson([
+            'message' => 'Lab test deleted successfully'
+        ]);
+
+        $response = $this->getJson("/api/lab-tests/{$labTest->id}");
+        $response->assertStatus(404);
+    }
 }

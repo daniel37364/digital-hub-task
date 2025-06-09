@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\LabTest\Application\UseCases;
 
+use Modules\Common\Application\Exceptions\ModelNotFoundException;
 use Modules\LabTest\Domain\Models\LabTestCategory;
 use Modules\LabTest\Domain\Repositories\LabTestCategoryRepositoryInterface;
 
@@ -13,6 +14,10 @@ class FindByIdLabTestCategoryUseCase
 
     public function execute(string $id): ?LabTestCategory
     {
-        return $this->repository->findById($id);
+        $model = $this->repository->findById($id);
+        if (!$model) {
+            throw new ModelNotFoundException('LabTestCategory', $id);
+        }
+        return $model;
     }
 }

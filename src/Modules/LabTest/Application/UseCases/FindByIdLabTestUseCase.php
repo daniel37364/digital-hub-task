@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\LabTest\Application\UseCases;
 
+use Modules\Common\Application\Exceptions\ModelNotFoundException;
 use Modules\LabTest\Domain\Models\LabTest;
 use Modules\LabTest\Domain\Repositories\LabTestRepositoryInterface;
 
@@ -15,6 +16,10 @@ class FindByIdLabTestUseCase
 
     public function execute(string $id): ?LabTest
     {
-        return $this->repository->findById($id);
+        $model = $this->repository->findById($id);
+        if (!$model) {
+            throw new ModelNotFoundException('LabTest', $id);
+        }
+        return $model;
     }
 }

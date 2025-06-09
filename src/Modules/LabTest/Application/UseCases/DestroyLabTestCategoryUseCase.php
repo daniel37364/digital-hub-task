@@ -19,6 +19,7 @@ class DestroyLabTestCategoryUseCase
     {
         DB::beginTransaction();
         $labTestCategory = $this->labTestCategoryRepository->softDelete($id);
+
         DB::commit();
     }
 }

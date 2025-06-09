@@ -98,15 +98,18 @@ class LabTestCategoryControllerTest extends TestCase
         $response->assertJsonPath('data.name.en', 'Updated Category Name');
     }
 
-    // public function testDestroy(): void
-    // {
-    //     $labTestCategory = LabTestCategory::factory()->create();
+    public function testDestroy(): void
+    {
+        $labTestCategory = LabTestCategory::factory()->create();
 
-    //     $response = $this->deleteJson("/lab-test-categories/{$labTestCategory->id}");
+        $response = $this->deleteJson("/api/lab-test-categories/{$labTestCategory->id}");
 
-    //     $response->assertStatus(200);
-    //     $response->assertJson([
-    //         'message' => 'Lab Test Category deleted successfully'
-    //     ]);
-    // }
+        $response->assertStatus(200);
+        $response->assertJson([
+            'message' => 'Lab Test Category deleted successfully'
+        ]);
+
+        $response = $this->getJson("/api/lab-test-categories/{$labTestCategory->id}");
+        $response->assertStatus(404);
+    }
 }
