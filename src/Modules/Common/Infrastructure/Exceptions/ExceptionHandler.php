@@ -56,12 +56,34 @@ class ExceptionHandler extends BaseExceptionHandler
         if ($exception instanceof \RuntimeException) {
             return ApiResponseFormatter::error('Runtime Exception', 400);
         }
-
         if ($exception instanceof \Illuminate\Validation\ValidationException) {
             return ApiResponseFormatter::error('Validation Error', 422, $exception->errors());
         }
         if ($exception instanceof ModelNotFoundException) {
             return ApiResponseFormatter::error('Resource not found', 404);
+        }
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+            return ApiResponseFormatter::error('Endpoint not found', 404);
+        }
+
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException) {
+            return ApiResponseFormatter::error('Method not allowed', 405);
+        }
+
+        if ($exception instanceof \Illuminate\Auth\AuthenticationException) {
+            return ApiResponseFormatter::error('Unauthenticated', 401);
+        }
+
+        if ($exception instanceof \Illuminate\Auth\Access\AuthorizationException) {
+            return ApiResponseFormatter::error('Forbidden', 403);
+        }
+
+        if ($exception instanceof \Illuminate\Database\QueryException) {
+            return ApiResponseFormatter::error('Database error', 500);
+        }
+
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException) {
+            return ApiResponseFormatter::error($exception->getMessage(), $exception->getStatusCode());
         }
 
         return ApiResponseFormatter::error($exception->getMessage(), 500);
