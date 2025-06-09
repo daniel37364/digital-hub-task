@@ -17,7 +17,13 @@ class LabTestRepository implements LabTestRepositoryInterface
 {
     public function filterLabTests(FilterLabTestDto $filterDto): LabTestCollection
     {
-        $query = LabTestEloquent::with(['name.langs', 'description.langs', 'synonyms.name', 'categories', 'categories.name.langs'])->where('public', true)->where('deleted', false);
+        $query = LabTestEloquent::with([
+            'name.langs',
+            'description.langs',
+            'synonyms.name',
+            'categories' => fn($q) => $q->where('public', true)->where('deleted', false),
+            'categories.name.langs',
+        ])->where('public', true)->where('deleted', false);
 
         if ($filterDto->name !== null) {
             $query->whereHas('name.langs', function ($q) use ($filterDto) {
@@ -45,7 +51,13 @@ class LabTestRepository implements LabTestRepositoryInterface
 
     public function findById(string $id): ?LabTest
     {
-        $model = LabTestEloquent::with(['name.langs', 'description.langs', 'synonyms.name', 'categories.name.langs'])->find($id);
+        $model = LabTestEloquent::with([
+            'name.langs',
+            'description.langs',
+            'synonyms.name',
+            'categories' => fn($q) => $q->where('public', true)->where('deleted', false),
+            'categories.name.langs',
+        ])->where('public', true)->where('deleted', false)->find($id);
         return $model->exists() ? LabTestMapper::fromDatabase($model->toArray()) : null;
     }
 
@@ -84,5 +96,12 @@ class LabTestRepository implements LabTestRepositoryInterface
         }
         $model->load('categories.name.langs');
         return LabTestMapper::fromDatabase($model->toArray());
+    }
+
+    public function softDelete(string $id): void
+    {
+        $model = LabTestEloquent::findOrFail($id);
+        $model->deleted = true;
+        $model->save();
     }
 }

@@ -12,6 +12,6 @@ interface LabTestRepositoryInterface
     public function filterLabTests(FilterLabTestDto $filterDto): LabTestCollection;
     public function findById(string $id): ?LabTest;
     public function save(LabTest $labTest): LabTest;
-    public function delete(string $id): void;
+    public function softDelete(string $id): void;
     public function updateCategories(LabTest $labTest, array $categoryIds): LabTest;
 }

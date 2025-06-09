@@ -14,5 +14,5 @@ interface LabTestCategoryRepositoryInterface
     public function findById(string $id): ?LabTestCategory;
     public function save(LabTestCategory $labTestCategory): LabTestCategory;
     public function updateLabTests(LabTestCategory $labTestCategory, array $labTests): LabTestCategory;
-    // public function delete(string $id): void;
+    public function softDelete(string $id): void;
 }

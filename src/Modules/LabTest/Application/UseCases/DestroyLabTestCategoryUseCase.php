@@ -18,8 +18,7 @@ class DestroyLabTestCategoryUseCase
     public function execute(string $id): void
     {
         DB::beginTransaction();
-        $labTestCategory = $this->labTestCategoryRepository->findById($id);
-        $this->langSetRepository->delete($labTestCategory->getNameLangSetId()->toString());
+        $labTestCategory = $this->labTestCategoryRepository->softDelete($id);
         DB::commit();
     }
 }

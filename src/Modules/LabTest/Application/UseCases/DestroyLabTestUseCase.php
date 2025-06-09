@@ -18,9 +18,7 @@ class DestroyLabTestUseCase
     public function execute(string $id): void
     {
         DB::beginTransaction();
-        $labTest = $this->labTestRepository->findById($id);
-        $this->langSetRepository->delete($labTest->getNameLangSetId()->toString());
-        $this->langSetRepository->delete($labTest->getDescriptionLangSetId()->toString());
+        $labTest = $this->labTestRepository->softDelete($id);
         DB::commit();
     }
 }
