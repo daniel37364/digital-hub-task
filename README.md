@@ -1,7 +1,10 @@
 # Digital Hub task
 
 Słowem wstępu ;) Użyłem frameworka Laravel 12 oraz podejścia DDD (Domain-Driven Design), dzięki temu mamy jasne oddzielenie warstwy logiki biznesowej, aplikacyjnej oraz infrastruktury. Co prawda to jest prosty CRUD, który nie zawira logiki biznesowej ale w przyszłości może już ją zawierać, projekt może się rozwinąć ;)  
-Założeniem tego API jest użycie lokalne, więc nie robiłem żadnych metod uwierzytelniania. Gdyby miało być użyte publicznie na pewno trzeba by zastosować uwierzytelnianie np. za pomocą tokenów JWT oraz zabezpieczyć enpointy zmieniające stan aplikacji.
+Założeniem tego API jest użycie lokalne, więc nie robiłem żadnych metod uwierzytelniania. Gdyby miało być użyte publicznie na pewno trzeba by zastosować uwierzytelnianie np. za pomocą tokenów JWT oraz zabezpieczyć enpointy zmieniające stan aplikacji.  
+
+Dołączam jeszcze diagram bazy danych ;)  
+https://dbdiagram.io/d/6842c325ba2a4ac57b23f6f3
 
 ## Jak odpalić projekt
 
