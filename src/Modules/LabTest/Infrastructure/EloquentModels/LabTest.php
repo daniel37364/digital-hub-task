@@ -5,12 +5,17 @@ declare(strict_types=1);
 namespace Modules\LabTest\Infrastructure\EloquentModels;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Common\Infrastructure\EloquentModels\LangSet;
+use Modules\Common\Infrastructure\Traits\HasUuid;
 use Modules\LabTest\Infrastructure\EloquentModels\LabTestSynonym;
 use Modules\LabTest\Infrastructure\EloquentModels\LabTestCategory;
+use Modules\LabTest\Infrastructure\Factories\LabTestFactoryEloquent;
 
 class LabTest extends Model
 {
+    use HasUuid, HasFactory;
+
     public $incrementing = false;
     protected $keyType = 'string';
 
@@ -53,5 +58,10 @@ class LabTest extends Model
     public function synonyms()
     {
         return $this->hasMany(LabTestSynonym::class, 'lab_test_id');
+    }
+
+    protected static function newFactory()
+    {
+        return LabTestFactoryEloquent::new();
     }
 }

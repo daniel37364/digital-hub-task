@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lab_test_category_lab_test', function (Blueprint $table) {
+        Schema::create('lab_test_category_pivot', function (Blueprint $table) {
             $table->uuid('lab_test_id');
             $table->uuid('lab_test_category_id');
 
