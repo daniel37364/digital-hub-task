@@ -6,6 +6,7 @@ Założeniem tego API jest użycie lokalne, więc nie robiłem żadnych metod uw
 ## Jak odpalić projekt
 
 ```
+cp .env.example .env (do testu można użyc lokalnej bazy sqlite)
 php artisan migrate
 php artisan db:seed
 php artisan serve
