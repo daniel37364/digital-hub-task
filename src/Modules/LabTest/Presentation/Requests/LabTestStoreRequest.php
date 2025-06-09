@@ -29,7 +29,6 @@ class LabTestStoreRequest extends FormRequest
             'description' => 'required|array',
             'description.*' => 'required|string|max:2048',
             'public' => 'required|boolean',
-            'category_id' => 'nullable|string|exists:lab_test_categories,id',
         ];
     }
 }

@@ -27,6 +27,7 @@ class LabTestCategoryRepository implements LabTestCategoryRepositoryInterface
                 $q->where('value', 'like', '%' . $filterDto->name . '%');
             });
         }
+        $query->orderBy('ord');
         return new LabTestCategoryCollection(
             $query->get()->map(fn($model) => LabTestCategoryMapper::fromDatabase($model->toArray()))->all()
         );

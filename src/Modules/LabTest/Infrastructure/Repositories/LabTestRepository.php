@@ -45,6 +45,7 @@ class LabTestRepository implements LabTestRepositoryInterface
         if ($filterDto->codeIcd !== null) {
             $query->where('code_icd', 'like', '%' . $filterDto->codeIcd . '%');
         }
+        $query->orderBy('ord');
         return new LabTestCollection($query->get()->map(fn(LabTestEloquent $model) => LabTestMapper::fromDatabase($model->toArray()))->all());
     }
 
